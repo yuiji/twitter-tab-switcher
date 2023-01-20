@@ -1,0 +1,13 @@
+{
+  "name": "Twitter Tab Switcher",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts":[
+    {
+      "matches": ["https://twitter.com/home*"],
+      "js": ["content-script.js"]
+    }
+  ],
+  "permissions": ["storage"],
+  "author": "Yunus Alper Göl <github.com/yuiji> "
+}
