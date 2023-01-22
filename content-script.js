@@ -1,5 +1,7 @@
-function switchTab() {
+const observer = new MutationObserver(() => {
   const tablist = document.querySelector("[role='tablist']");
+  if (!tablist) return;
+
   const followDiv = tablist.childNodes[1];
   const followButton = followDiv.childNodes[0];
   const forYouDiv = tablist.childNodes[0];
@@ -20,17 +22,11 @@ function switchTab() {
   forYouButton.addEventListener('click', () => {
     chrome.storage.local.set({ selectedTab: 'forYou' });
   });
-}
 
-function runAfterLoad() {
-  function checkDomLoaded() {
-    if (document.querySelector("[role='tablist']")) {
-      clearInterval(DOMInitTimer);
-      switchTab();
-    }
-  }
+  observer.disconnect();
+});
 
-  let DOMInitTimer = setInterval(checkDomLoaded, 100);
-}
-
-window.addEventListener('load', runAfterLoad);
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
+});
